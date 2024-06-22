@@ -3,49 +3,49 @@ import { storage } from '@utils/storage';
 import { createContext, ReactNode, useContext, useState } from 'react';
 
 interface AuthContextValue {
-  isLoggedIn: boolean;
-  isLoginSuccess: boolean;
-  setIsLoginSuccess: React.Dispatch<React.SetStateAction<boolean>>;
-  login: () => void;
-  logout: () => void;
+   isLoggedIn: boolean;
+   isLoginSuccess: boolean;
+   setIsLoginSuccess: React.Dispatch<React.SetStateAction<boolean>>;
+   login: () => void;
+   logout: () => void;
 }
 
 const AuthContext = createContext<AuthContextValue>({} as AuthContextValue);
 
 interface AuthProviderProps {
-  children: ReactNode;
+   children: ReactNode;
 }
 
 export function AuthProvider({ children }: AuthProviderProps) {
-  const initialState = Boolean(storage.getTokenStore());
-  const [isLoggedIn, setIsLoggedIn] = useState(initialState);
-  const [isLoginSuccess, setIsLoginSuccess] = useState(false);
+   const initialState = Boolean(storage.getTokenStore());
+   const [isLoggedIn, setIsLoggedIn] = useState(initialState);
+   const [isLoginSuccess, setIsLoginSuccess] = useState(false);
 
-  const login = () => {
-    setIsLoggedIn(true);
-    setIsLoginSuccess(true);
-  };
+   const login = () => {
+      setIsLoggedIn(true);
+      setIsLoginSuccess(true);
+   };
 
-  const logout = () => {
-    storage.removeTokenStore();
-    storage.removeCartStore();
-    setIsLoggedIn(false);
-    setIsLoginSuccess(false);
-  };
+   const logout = () => {
+      storage.removeTokenStore();
+      storage.removeCartStore();
+      setIsLoggedIn(false);
+      setIsLoginSuccess(false);
+   };
 
-  return (
-    <AuthContext.Provider value={{ isLoggedIn, isLoginSuccess, setIsLoginSuccess, login, logout }}>
-      {children}
-    </AuthContext.Provider>
-  );
+   return (
+      <AuthContext.Provider value={{ isLoggedIn, isLoginSuccess, setIsLoginSuccess, login, logout }}>
+         {children}
+      </AuthContext.Provider>
+   );
 }
 
 export const useAuth = () => {
-  const context = useContext(AuthContext);
+   const context = useContext(AuthContext);
 
-  if (context === undefined) {
-    throw new Error('useAuth hook must be used within a AuthProvider');
-  }
+   if (context === undefined) {
+      throw new Error('useAuth hook must be used within a AuthProvider');
+   }
 
-  return context;
+   return context;
 };

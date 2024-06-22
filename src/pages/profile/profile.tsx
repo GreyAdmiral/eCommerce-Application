@@ -15,72 +15,72 @@ import { Navigate } from 'react-router-dom';
 import styles from './profile.module.scss';
 
 const tabs: { [key: string]: string } = {
-  account: 'My Account',
-  addresses: 'My Addresses',
+   account: 'My Account',
+   addresses: 'My Addresses',
 };
 
 export const Profile = () => {
-  const [activeTab, setActiveTab] = useState(tabs.account);
-  const [customerData, setCustomerData] = useState<Customer>({} as Customer);
-  const { isLoggedIn } = useAuth();
-  const { customToast, errorNotify } = useToast();
+   const [activeTab, setActiveTab] = useState(tabs.account);
+   const [customerData, setCustomerData] = useState<Customer>({} as Customer);
+   const { isLoggedIn } = useAuth();
+   const { customToast, errorNotify } = useToast();
 
-  const getCustomerData = async () => {
-    try {
-      const customer = await sdkService.getCustomerData();
-      setCustomerData(customer);
-    } catch (err) {
-      errorNotify((err as Error).message);
-    }
-  };
+   const getCustomerData = async () => {
+      try {
+         const customer = await sdkService.getCustomerData();
+         setCustomerData(customer);
+      } catch (err) {
+         errorNotify((err as Error).message);
+      }
+   };
 
-  useEffect(() => {
-    getCustomerData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+   useEffect(() => {
+      getCustomerData();
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+   }, []);
 
-  if (!isLoggedIn) {
-    return <Navigate to="/login" replace />;
-  }
+   if (!isLoggedIn) {
+      return <Navigate to="/login" replace />;
+   }
 
-  return (
-    <div className={styles.profile}>
-      <Header />
-      <Container classname={styles.profile}>
-        <div className={styles.profileContainer}>
-          <div className={styles.profileTitle}>
-            <div className={styles.avatarContainer}>
-              <img className={styles.avatar} src={avatar} alt="avatar icon" />
+   return (
+      <div className={styles.profile}>
+         <Header />
+         <Container classname={styles.profile}>
+            <div className={styles.profileContainer}>
+               <div className={styles.profileTitle}>
+                  <div className={styles.avatarContainer}>
+                     <img className={styles.avatar} src={avatar} alt="avatar icon" />
+                  </div>
+                  <h2 className={styles.profileHeading}>Profile</h2>
+               </div>
+               <div className={styles.profileMenu}>
+                  {Object.entries(tabs).map(([key, value]) => (
+                     <button
+                        className={classnames(styles.profileMenuButton, { [styles.active]: value === activeTab })}
+                        key={key}
+                        type="button"
+                        onClick={() => setActiveTab(tabs[key])}
+                     >
+                        {value}
+                     </button>
+                  ))}
+               </div>
+               <div className={styles.profileContent}>
+                  {activeTab === tabs.account && (
+                     <div className={styles.userData}>
+                        <Account customerData={customerData} setCustomerData={setCustomerData} />
+                        <ProfilePassword customerData={customerData} setCustomerData={setCustomerData} />
+                     </div>
+                  )}
+                  {activeTab === tabs.addresses && (
+                     <ProfileAddresses customerData={customerData} setCustomerData={setCustomerData} />
+                  )}
+               </div>
             </div>
-            <h2 className={styles.profileHeading}>Profile</h2>
-          </div>
-          <div className={styles.profileMenu}>
-            {Object.entries(tabs).map(([key, value]) => (
-              <button
-                className={classnames(styles.profileMenuButton, { [styles.active]: value === activeTab })}
-                key={key}
-                type="button"
-                onClick={() => setActiveTab(tabs[key])}
-              >
-                {value}
-              </button>
-            ))}
-          </div>
-          <div className={styles.profileContent}>
-            {activeTab === tabs.account && (
-              <div className={styles.userData}>
-                <Account customerData={customerData} setCustomerData={setCustomerData} />
-                <ProfilePassword customerData={customerData} setCustomerData={setCustomerData} />
-              </div>
-            )}
-            {activeTab === tabs.addresses && (
-              <ProfileAddresses customerData={customerData} setCustomerData={setCustomerData} />
-            )}
-          </div>
-        </div>
-      </Container>
-      <Footer />
-      {customToast({ position: 'top-center', autoClose: 2000 })}
-    </div>
-  );
+         </Container>
+         <Footer />
+         {customToast({ position: 'top-center', autoClose: 2000 })}
+      </div>
+   );
 };

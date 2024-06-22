@@ -10,15 +10,15 @@ import './styles/index.scss';
 const root = document.getElementById('root') as HTMLElement;
 
 ReactDOM.createRoot(root).render(
-  <React.StrictMode>
-    <AuthProvider>
-      <ToastProvider>
-        <CategoryProvider>
-          <CartProvider>
-            <AppRouter />
-          </CartProvider>
-        </CategoryProvider>
-      </ToastProvider>
-    </AuthProvider>
-  </React.StrictMode>
+   <React.StrictMode>
+      <AuthProvider>
+         <ToastProvider>
+            <CategoryProvider>
+               <CartProvider>
+                  <AppRouter />
+               </CartProvider>
+            </CategoryProvider>
+         </ToastProvider>
+      </AuthProvider>
+   </React.StrictMode>
 );

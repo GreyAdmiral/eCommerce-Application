@@ -12,38 +12,38 @@ import { useEffect } from 'react';
 import styles from './home.module.scss';
 
 export function Home() {
-  const { isLoginSuccess, setIsLoginSuccess } = useAuth();
-  const { customToast, successNotify } = useToast();
+   const { isLoginSuccess, setIsLoginSuccess } = useAuth();
+   const { customToast, successNotify } = useToast();
 
-  const notify = () => {
-    successNotify(SuccessLoginMessage);
-    setIsLoginSuccess(false);
-  };
+   const notify = () => {
+      successNotify(SuccessLoginMessage);
+      setIsLoginSuccess(false);
+   };
 
-  useEffect(() => {
-    if (isLoginSuccess) {
-      notify();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+   useEffect(() => {
+      if (isLoginSuccess) {
+         notify();
+      }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+   }, []);
 
-  return (
-    <>
-      <div className={styles.main}>
-        <div className={styles.promoCode}>
-          <span className={styles.promoCodeText}>{promoCodeBanner}</span>
-        </div>
-        <div className={styles.hero}>
-          <Header />
-          <Banner />
-        </div>
-        <NewArrivals />
-        <Discover />
-        <About />
-        <Gramm />
-      </div>
-      <Footer />
-      {customToast({ position: 'top-center', autoClose: 2000 })}
-    </>
-  );
+   return (
+      <>
+         <div className={styles.main}>
+            <div className={styles.promoCode}>
+               <span className={styles.promoCodeText}>{promoCodeBanner}</span>
+            </div>
+            <div className={styles.hero}>
+               <Header />
+               <Banner />
+            </div>
+            <NewArrivals />
+            <Discover />
+            <About />
+            <Gramm />
+         </div>
+         <Footer />
+         {customToast({ position: 'top-center', autoClose: 2000 })}
+      </>
+   );
 }

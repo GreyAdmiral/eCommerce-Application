@@ -7,15 +7,15 @@ import { FC } from 'react';
 import styles from './Header.module.scss';
 
 export const Header: FC = () => {
-  return (
-    <header className={styles.header}>
-      <Container classname={styles.header}>
-        <div className={styles.headerBody}>
-          <Navigation id="menu" />
-          <Logo spritePaths={sprite} title="Sprout" width="88" height="82" />
-          <UserMenu />
-        </div>
-      </Container>
-    </header>
-  );
+   return (
+      <header className={styles.header}>
+         <Container classname={styles.header}>
+            <div className={styles.headerBody}>
+               <Navigation id="menu" />
+               <Logo spritePaths={sprite} title="Sprout" width="88" height="82" />
+               <UserMenu />
+            </div>
+         </Container>
+      </header>
+   );
 };

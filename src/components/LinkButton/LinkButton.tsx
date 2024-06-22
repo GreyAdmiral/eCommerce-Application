@@ -3,13 +3,13 @@ import { Link } from 'react-router-dom';
 import styles from './LinkButton.module.scss';
 
 interface ILinkButtonProps {
-  to: string;
+   to: string;
 }
 
 export const LinkButton: FC<React.PropsWithChildren & ILinkButtonProps> = ({ to, children, ...props }) => {
-  return (
-    <Link to={to} className={styles.linkButton} {...props}>
-      {children}
-    </Link>
-  );
+   return (
+      <Link to={to} className={styles.linkButton} {...props}>
+         {children}
+      </Link>
+   );
 };
