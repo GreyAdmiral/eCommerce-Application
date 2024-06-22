@@ -8,11 +8,6 @@ export const useLockScroll = (useLock: boolean) => {
       e.preventDefault();
    }, []);
 
-   const touchLockHandler = useCallback((e: TouchEvent) => {
-      e.stopPropagation();
-      e.preventDefault();
-   }, []);
-
    const scrollKeyLockHandler = useCallback(
       (e: KeyboardEvent) => {
          e.stopPropagation();
@@ -27,12 +22,12 @@ export const useLockScroll = (useLock: boolean) => {
    useEffect(() => {
       if (useLock) {
          document.body.addEventListener('wheel', scrollLockHandler, { passive: false });
+         document.body.addEventListener('touchmove', scrollLockHandler, { passive: false });
          document.body.addEventListener('keydown', scrollKeyLockHandler);
-         document.body.addEventListener('touchmove', touchLockHandler, { passive: false });
       } else {
          document.body.removeEventListener('wheel', scrollLockHandler);
+         document.body.removeEventListener('touchmove', scrollLockHandler);
          document.body.removeEventListener('keydown', scrollKeyLockHandler);
-         document.body.removeEventListener('touchmove', touchLockHandler);
       }
    });
 };
