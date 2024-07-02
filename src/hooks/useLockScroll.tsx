@@ -1,23 +1,20 @@
-import { useCallback, useEffect, useMemo } from 'react';
+import { useCallback, useEffect } from 'react';
+
+const keyboardLockedCodes = ['ArrowUp', 'ArrowDown'];
 
 export const useLockScroll = (useLock: boolean) => {
-   const keyboardLockedCodes = useMemo(() => ['ArrowUp', 'ArrowDown'], []);
-
    const scrollLockHandler = useCallback((e: Event) => {
       e.stopPropagation();
       e.preventDefault();
    }, []);
 
-   const scrollKeyLockHandler = useCallback(
-      (e: KeyboardEvent) => {
-         e.stopPropagation();
+   const scrollKeyLockHandler = useCallback((e: KeyboardEvent) => {
+      e.stopPropagation();
 
-         if (keyboardLockedCodes.includes(e.code)) {
-            e.preventDefault();
-         }
-      },
-      [keyboardLockedCodes]
-   );
+      if (keyboardLockedCodes.includes(e.code)) {
+         e.preventDefault();
+      }
+   }, []);
 
    useEffect(() => {
       if (useLock) {
