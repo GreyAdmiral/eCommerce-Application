@@ -1,8 +1,9 @@
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 
 const keyboardLockedCodes = ['ArrowUp', 'ArrowDown'];
 
-export const useLockScroll = (useLock: boolean) => {
+export const useLockScroll = (isUseLock: boolean) => {
+   const bodyRef = useRef(document.body);
    const scrollLockHandler = useCallback((e: Event) => {
       e.stopPropagation();
       e.preventDefault();
@@ -17,14 +18,18 @@ export const useLockScroll = (useLock: boolean) => {
    }, []);
 
    useEffect(() => {
-      if (useLock) {
-         document.body.addEventListener('wheel', scrollLockHandler, { passive: false });
-         document.body.addEventListener('touchmove', scrollLockHandler, { passive: false });
-         document.body.addEventListener('keydown', scrollKeyLockHandler);
-      } else {
-         document.body.removeEventListener('wheel', scrollLockHandler);
-         document.body.removeEventListener('touchmove', scrollLockHandler);
-         document.body.removeEventListener('keydown', scrollKeyLockHandler);
+      const { current: body } = bodyRef;
+
+      if (isUseLock) {
+         body.addEventListener('wheel', scrollLockHandler, { passive: false });
+         body.addEventListener('touchmove', scrollLockHandler, { passive: false });
+         body.addEventListener('keydown', scrollKeyLockHandler);
       }
+
+      return () => {
+         body.removeEventListener('wheel', scrollLockHandler);
+         body.removeEventListener('touchmove', scrollLockHandler);
+         body.removeEventListener('keydown', scrollKeyLockHandler);
+      };
    });
 };
