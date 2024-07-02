@@ -1,8 +1,8 @@
 import { useChangeRoute } from '@hooks/useChangeRoute';
 import { useClickOutside } from '@hooks/useClickOutside';
+import { useMediaQuery } from '@hooks/useMediaQuery';
 import { AppRoutes } from '@router/routes';
 import { FC, useEffect, useRef, useState } from 'react';
-import { useMediaQuery } from 'react-responsive';
 import { Link } from 'react-router-dom';
 import styles from './Navigation.module.scss';
 
@@ -20,7 +20,7 @@ const paths: string[] = [
 export const Navigation: FC<NavigationProps> = ({ id, ...props }) => {
    const menuPaths = useChangeRoute(paths);
    const [isMenuOpen, setIsMenuOpen] = useState(false);
-   const isDesktop = useMediaQuery({ query: '(min-width: 769px)' });
+   const isDesktop = useMediaQuery('(min-width: 769px)');
    const menuRef = useRef(null);
    const onClickOutside = () => {
       if (!isDesktop && isMenuOpen) {

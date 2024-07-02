@@ -13,7 +13,6 @@ const closeButtonsCodes = ['Escape'];
 
 export const Modal: FC<React.PropsWithChildren & IModalProps> = ({ isOpenModal, onClose, children }) => {
    const modalRef = useRef(null);
-   const bodyRef = useRef(document.body);
    const modalRoot = useMemo(() => {
       const element = document.createElement('div');
 
@@ -35,17 +34,15 @@ export const Modal: FC<React.PropsWithChildren & IModalProps> = ({ isOpenModal, 
    useLockScroll(isOpenModal);
 
    useEffect(() => {
-      const { current: body } = bodyRef;
-
       if (isOpenModal) {
-         body.append(modalRoot);
-         body.addEventListener('keydown', keydownHandler);
+         document.body.append(modalRoot);
+         document.body.addEventListener('keydown', keydownHandler);
       }
 
       return () => {
          if (isOpenModal) {
             modalRoot.remove();
-            body.removeEventListener('keydown', keydownHandler);
+            document.body.removeEventListener('keydown', keydownHandler);
          }
       };
    });
