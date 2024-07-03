@@ -11,7 +11,7 @@ interface IModalProps {
 
 const closeButtonsCodes = ['Escape'];
 
-export const Modal: FC<React.PropsWithChildren & IModalProps> = ({ isOpenModal, onClose, children }) => {
+export const Modal: FC<React.PropsWithChildren & IModalProps> = ({ isOpenModal, onClose, children, ...props }) => {
    const modalRef = useRef(null);
    const modalRoot = useMemo(() => {
       const element = document.createElement('div');
@@ -49,7 +49,7 @@ export const Modal: FC<React.PropsWithChildren & IModalProps> = ({ isOpenModal, 
 
    if (isOpenModal) {
       return createPortal(
-         <div className={styles.modalBody} ref={modalRef}>
+         <div className={styles.modalBody} ref={modalRef} role="dialog" aria-modal={isOpenModal} {...props}>
             {children}
          </div>,
          modalRoot
